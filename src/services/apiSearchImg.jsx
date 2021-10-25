@@ -1,24 +1,25 @@
-import axios from 'axios';
-const BASE_URL = 'https://pixabay.com/api/';
+// import axios from 'axios';
+// const BASE_URL = 'https://pixabay.com/api/';
 // const API_KEY = '23145424-17de0e2191faefedd106abc58';
 
-axios.defaults.baseURL = BASE_URL;
+// axios.defaults.baseURL = BASE_URL;
 
-// // import { Component } from 'react';
-// // https://pixabay.com/api/?q=что_искать&page=номер_страницы&key=твой_ключ&image_type=photo&orientation=horizontal&per_page=12
+// console.dir(axios);
+// // // import { Component } from 'react';
 
-// const getImages = async (searchQuery, page) => {};
+// const getImages = async (searchQuery, page) => {
 
-// axios
-//   .get('&{BASE_URL}')
-//   .then(function (response) {
-//     // handle success
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     // handle error
-//     console.log(error);
-//   })
-//   .then(function () {
-//     // always executed
-//   });
+//     try {
+//          const resultRequest = await axios.get(`${BASE_URL}?q=${searchQuery}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`);
+//         return  resultRequest;
+
+//   } catch (err) {
+//     throw err;
+//     }
+//  };
+
+// export default getImages;
+
+// getUsers()
+//   .then(users => console.log(users))
+//   .catch(error => console.log(error))

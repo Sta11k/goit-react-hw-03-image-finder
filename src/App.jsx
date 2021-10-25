@@ -4,11 +4,21 @@ import { Component } from 'react';
 import Searchbar from './components/Searchbar/Searchbar';
 
 class App extends Component {
+  submitHandler = search => {
+    this.maxPages = 0;
+
+    this.setState(() => ({
+      images: [],
+      searchQuery: search,
+      page: 1,
+    }));
+  };
+
   render() {
     // console.log(BASE_URL);
     return (
       <div className="App">
-        <Searchbar />
+        <Searchbar onSubmit={this.submitHandler} />
       </div>
     );
   }
