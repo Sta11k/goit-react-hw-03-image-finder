@@ -7,9 +7,9 @@ class Searchbar extends Component {
     this.setState({ value: e.target.value });
   };
 
-  onSubmitHandler = e => {
+  SubmitHandler = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state.value.trim());
+    this.props.onSubmit(this.state.value.trim().toLowerCase());
   };
 
   render() {
@@ -17,7 +17,7 @@ class Searchbar extends Component {
     console.log(value);
     return (
       <header className="Searchbar">
-        <form className="SearchForm" onSubmit={this.onSubmitHandler}>
+        <form className="SearchForm" onSubmit={this.SubmitHandler}>
           <button type="submit" className="SearchForm-button">
             <span className="SearchForm-button-label">Search</span>
           </button>

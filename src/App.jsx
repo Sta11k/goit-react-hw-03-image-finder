@@ -4,12 +4,12 @@ import { Component } from 'react';
 import Searchbar from './components/Searchbar/Searchbar';
 
 class App extends Component {
-  submitHandler = search => {
+  onsubmitHandler = searchForm => {
     this.maxPages = 0;
-
+    // console.log(object);
     this.setState(() => ({
       images: [],
-      searchQuery: search,
+      searchQuery: searchForm,
       page: 1,
     }));
   };
@@ -18,7 +18,7 @@ class App extends Component {
     // console.log(BASE_URL);
     return (
       <div className="App">
-        <Searchbar onSubmit={this.submitHandler} />
+        <Searchbar onSubmit={this.onsubmitHandler} />
       </div>
     );
   }
