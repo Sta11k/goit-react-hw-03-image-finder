@@ -3,15 +3,16 @@ class Searchbar extends Component {
   state = {
     value: '',
   };
-  changeHandler = e => {
-    this.setState({ value: e.target.value });
-  };
 
   SubmitHandler = e => {
     e.preventDefault();
+    console.log(' перед отправкой', this.state.value);
     this.props.onSubmit(this.state.value.trim().toLowerCase());
+    this.setState({ value: '' });
   };
-
+  changeHandler = e => {
+    this.setState({ value: e.target.value });
+  };
   render() {
     const { value } = this.state;
     console.log(value);
