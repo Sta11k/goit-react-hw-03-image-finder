@@ -13,6 +13,11 @@ class Searchbar extends Component {
   changeHandler = e => {
     this.setState({ value: e.target.value });
   };
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevProps.searchQuery !== this.props.searchQuery)
+  //     console.log('get Fetch');
+  // }
   render() {
     const { value } = this.state;
     console.log(value);

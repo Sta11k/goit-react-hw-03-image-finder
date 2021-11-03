@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Searchbar from './components/Searchbar/Searchbar';
 import { PixabayFetchFunc } from './services/apiSearchImg';
 import ImageGallery from './components/ImageGallery/ImageGallery';
+import Button from './components/Button/Button';
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '23145424-17de0e2191faefedd106abc58';
 
@@ -17,7 +18,10 @@ class App extends Component {
   };
   componentDidMount() {}
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchQuery !== this.state.searchQuery) {
+    if (
+      prevState.searchQuery !== this.state.searchQuery
+      // ||      prevState.searchPage !== this.state.searchPage
+    ) {
       newPixabayFetchFunc.searchQuery = this.state.searchQuery;
       newPixabayFetchFunc.getImages().then(response => {
         this.setState({ arreyImages: response });
@@ -31,31 +35,26 @@ class App extends Component {
     this.setState(() => ({
       // arreyImages: [],
       searchQuery: submitSearchForm,
-      searchPage: 1,
+      // searchPage: 1,
     }));
+  };
+  loadMoreHandler = () => {
+    newPixabayFetchFunc.searchPage += 1;
+    console.log('searchPage', newPixabayFetchFunc.searchPage);
+    // this.setState(() => ({
+    //   searchPage: this.state.searchPage + 1,
+    // }));
+    // console.log(this.searchPage);
   };
 
   render() {
     return (
       <div className="App">
         <Searchbar onSubmit={this.onsubmitHandler} />
-        <ul className="ImageGallery">
-          {this.state.arreyImages.length > 0 && (
-            <ImageGallery arreyImages={this.state.arreyImages} />
-          )}
-          {/* {this.state.arreyImages.length > 0 &&
-            this.state.arreyImages.map(el => {
-              return (
-                <li key={el.id}>
-                  <img
-                    src={el.webformatURL}
-                    alt=""
-                    className="ImageGalleryItem-image"
-                  />
-                </li>
-              );
-            })} */}
-        </ul>
+        {this.state.arreyImages.length > 0 && (
+          <ImageGallery arreyImages={this.state.arreyImages} />
+        )}
+        <Button loadMorer={this.loadMoreHandler} text="LOAD MORE..." />
       </div>
     );
   }
