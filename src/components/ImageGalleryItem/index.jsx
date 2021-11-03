@@ -1,1 +1,1 @@
-import { defaults } from './ImageGalleryItem';
+// import { defaults } from './ImageGalleryItem';

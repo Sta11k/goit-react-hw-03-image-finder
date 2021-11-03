@@ -2,7 +2,7 @@ import './styles.css';
 import React, { Component } from 'react';
 import Searchbar from './components/Searchbar/Searchbar';
 import { PixabayFetchFunc } from './services/apiSearchImg';
-
+import ImageGallery from './components/ImageGallery/ImageGallery';
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '23145424-17de0e2191faefedd106abc58';
 
@@ -40,7 +40,10 @@ class App extends Component {
       <div className="App">
         <Searchbar onSubmit={this.onsubmitHandler} />
         <ul className="ImageGallery">
-          {this.state.arreyImages.length > 0 &&
+          {this.state.arreyImages.length > 0 && (
+            <ImageGallery arreyImages={this.state.arreyImages} />
+          )}
+          {/* {this.state.arreyImages.length > 0 &&
             this.state.arreyImages.map(el => {
               return (
                 <li key={el.id}>
@@ -51,7 +54,7 @@ class App extends Component {
                   />
                 </li>
               );
-            })}
+            })} */}
         </ul>
       </div>
     );
