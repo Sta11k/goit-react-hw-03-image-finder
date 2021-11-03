@@ -13,7 +13,7 @@ class App extends Component {
   state = {
     arreyImages: [],
     searchQuery: '',
-    searchPage: 1,
+    // searchPage: 1,
     searchValue: '',
   };
   componentDidMount() {}
@@ -39,7 +39,7 @@ class App extends Component {
     }));
   };
   loadMoreHandler = () => {
-    newPixabayFetchFunc.searchPage += 1;
+    newPixabayFetchFunc.searchPage = 1;
     console.log('searchPage', newPixabayFetchFunc.searchPage);
     // this.setState(() => ({
     //   searchPage: this.state.searchPage + 1,
