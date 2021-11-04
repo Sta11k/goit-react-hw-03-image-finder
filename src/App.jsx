@@ -17,10 +17,10 @@ class App extends Component {
     // searchPage: 1,
     searchValue: '',
     status: 'init',
-    showModal: false,
+    openModal: false,
   };
 
-  fullScrinImages = '';
+  fullImageURL = '';
   componentDidMount() {}
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -42,13 +42,13 @@ class App extends Component {
     }
   }
   closeModal = () => {
-    this.fullScrinImages = '';
-    this.setState({ showModal: false });
+    this.fullImageURL = '';
+    this.setState({ openModal: false });
   };
 
-  showModalHendler = imgFollURL => () => {
-    this.fullScrinImages = imgFollURL;
-    this.setState({ showModal: true });
+  showImageHandler = imageURL => {
+    this.fullImageURL = imageURL;
+    this.setState({ openModal: true });
   };
 
   onsubmitHandler = submitSearchForm => {
@@ -83,35 +83,34 @@ class App extends Component {
         console.log(arreyImages);
       })
       .catch(error => {
-        console.log(error);
+        console.log('НАХІБА ТАКЕ РОБИТИ', error);
       });
-
-    // this.setState(() => ({
-    //   searchPage: this.state.searchPage + 1,
-    // }));
-    // console.log(this.searchPage);
   };
 
   render() {
-    // console.log(this.scrollHandler());
     return (
       <div className="App">
         <Searchbar onSubmit={this.onsubmitHandler} />
         {this.state.arreyImages.length > 0 && (
-          <ImageGallery arreyImages={this.state.arreyImages} />
+          <ImageGallery
+            arreyImages={this.state.arreyImages}
+            scrollHandler={this.scrollHandler()}
+            showImageHandler={this.showImageHandler}
+          />
         )}
         {this.state.arreyImages.length > 0 && (
           <Button
             loadMorer={this.loadMoreHandler}
-            scrollHandler={this.scrollHandler()}
+            // scrollHandler={this.scrollHandler()}
             text="LOAD MORE..."
           />
         )}
-        {this.state.showModal && (
+        {this.state.openModal && (
           <Modal
-          // fullScrinImages={this.fullScrinImages}
-          // closeMOdal={this.closeMOdal}
-          />
+            fullImageURL={this.fullImageURL}
+            // fullScrinImages={this.fullScrinImages}
+            closeMOdal={this.closeMOdal}
+          ></Modal>
         )}
       </div>
     );
