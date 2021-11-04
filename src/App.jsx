@@ -4,6 +4,7 @@ import Searchbar from './components/Searchbar/Searchbar';
 import { PixabayFetchFunc } from './services/apiSearchImg';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import Button from './components/Button/Button';
+import Modal from './components/Modal/Modal';
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '23145424-17de0e2191faefedd106abc58';
 
@@ -16,7 +17,10 @@ class App extends Component {
     // searchPage: 1,
     searchValue: '',
     status: 'init',
+    showModal: false,
   };
+
+  fullScrinImages = '';
   componentDidMount() {}
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -37,6 +41,16 @@ class App extends Component {
         });
     }
   }
+  closeModal = () => {
+    this.fullScrinImages = '';
+    this.setState({ showModal: false });
+  };
+
+  showModalHendler = imgFollURL => () => {
+    this.fullScrinImages = imgFollURL;
+    this.setState({ showModal: true });
+  };
+
   onsubmitHandler = submitSearchForm => {
     // this.maxPages = 0;
 
@@ -48,16 +62,12 @@ class App extends Component {
   };
 
   scrollHandler = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth',
-    });
-    // setTimeout(() => {
-    //   window.scrollTo({
-    //     top: document.documentElement.scrollHeight,
-    //     behavior: 'smooth',
-    //   });
-    // });
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      });
+    }, 800);
   };
 
   loadMoreHandler = () => {
@@ -83,6 +93,7 @@ class App extends Component {
   };
 
   render() {
+    // console.log(this.scrollHandler());
     return (
       <div className="App">
         <Searchbar onSubmit={this.onsubmitHandler} />
@@ -92,8 +103,14 @@ class App extends Component {
         {this.state.arreyImages.length > 0 && (
           <Button
             loadMorer={this.loadMoreHandler}
-            onScrollHandler={this.scrollHandler}
+            scrollHandler={this.scrollHandler()}
             text="LOAD MORE..."
+          />
+        )}
+        {this.state.showModal && (
+          <Modal
+          // fullScrinImages={this.fullScrinImages}
+          // closeMOdal={this.closeMOdal}
           />
         )}
       </div>

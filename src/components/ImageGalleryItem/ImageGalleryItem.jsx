@@ -8,6 +8,7 @@ export class ImageGalleryItem extends Component {
           src={this.props.webformatURL}
           alt=""
           className="ImageGalleryItem-image"
+          // onClick={this.props.showModalHendle}
         />
       </li>
     );

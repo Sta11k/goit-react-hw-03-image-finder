@@ -6,7 +6,11 @@ export default class ImageGallery extends Component {
       <ul className="ImageGallery">
         {this.props.arreyImages.map(el => {
           return (
-            <ImageGalleryItem key={el.id} webformatURL={el.webformatURL} />
+            <ImageGalleryItem
+              key={el.id}
+              webformatURL={el.webformatURL}
+              // showModalHendle={this.props.showModalHendler(el.largeImageURL)}
+            />
           );
         })}
       </ul>
