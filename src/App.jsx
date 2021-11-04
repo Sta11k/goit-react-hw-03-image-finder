@@ -46,6 +46,20 @@ class App extends Component {
       // searchPage: 1,
     }));
   };
+
+  scrollHandler = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
+    // setTimeout(() => {
+    //   window.scrollTo({
+    //     top: document.documentElement.scrollHeight,
+    //     behavior: 'smooth',
+    //   });
+    // });
+  };
+
   loadMoreHandler = () => {
     newPixabayFetchFunc.searchPage = 1;
     console.log('searchPage', newPixabayFetchFunc.searchPage);
@@ -61,6 +75,7 @@ class App extends Component {
       .catch(error => {
         console.log(error);
       });
+
     // this.setState(() => ({
     //   searchPage: this.state.searchPage + 1,
     // }));
@@ -75,7 +90,11 @@ class App extends Component {
           <ImageGallery arreyImages={this.state.arreyImages} />
         )}
         {this.state.arreyImages.length > 0 && (
-          <Button loadMorer={this.loadMoreHandler} text="LOAD MORE..." />
+          <Button
+            loadMorer={this.loadMoreHandler}
+            onScrollHandler={this.scrollHandler}
+            text="LOAD MORE..."
+          />
         )}
       </div>
     );
