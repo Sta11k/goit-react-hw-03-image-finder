@@ -15,6 +15,7 @@ class App extends Component {
     searchQuery: '',
     // searchPage: 1,
     searchValue: '',
+    status: 'init',
   };
   componentDidMount() {}
   componentDidUpdate(prevProps, prevState) {
@@ -22,11 +23,18 @@ class App extends Component {
       prevState.searchQuery !== this.state.searchQuery
       // ||      prevState.searchPage !== this.state.searchPage
     ) {
+      newPixabayFetchFunc.resetPage();
       newPixabayFetchFunc.searchQuery = this.state.searchQuery;
-      newPixabayFetchFunc.getImages().then(response => {
-        this.setState({ arreyImages: response });
-        console.log(response);
-      });
+
+      newPixabayFetchFunc
+        .getImages()
+        .then(response => {
+          this.setState({ arreyImages: response });
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
   onsubmitHandler = submitSearchForm => {
@@ -41,6 +49,18 @@ class App extends Component {
   loadMoreHandler = () => {
     newPixabayFetchFunc.searchPage = 1;
     console.log('searchPage', newPixabayFetchFunc.searchPage);
+    newPixabayFetchFunc.searchQuery = this.state.searchQuery;
+    newPixabayFetchFunc
+      .getImages()
+      .then(arreyImages => {
+        this.setState(prev => ({
+          arreyImages: [...prev.arreyImages, ...arreyImages],
+        }));
+        console.log(arreyImages);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     // this.setState(() => ({
     //   searchPage: this.state.searchPage + 1,
     // }));
@@ -54,7 +74,9 @@ class App extends Component {
         {this.state.arreyImages.length > 0 && (
           <ImageGallery arreyImages={this.state.arreyImages} />
         )}
-        <Button loadMorer={this.loadMoreHandler} text="LOAD MORE..." />
+        {this.state.arreyImages.length > 0 && (
+          <Button loadMorer={this.loadMoreHandler} text="LOAD MORE..." />
+        )}
       </div>
     );
   }

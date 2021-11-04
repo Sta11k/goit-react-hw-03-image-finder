@@ -14,6 +14,10 @@ export class PixabayFetchFunc {
     return (this._searchQuery = value);
   }
 
+  resetPage() {
+    return (this._searchPage = 1);
+  }
+
   get searchPage() {
     return this._searchPage;
   }
