@@ -5,9 +5,10 @@ import { PixabayFetchFunc } from './services/apiSearchImg';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import Button from './components/Button/Button';
 import Modal from './components/Modal/Modal';
+import Loader from './components/Loader/Loader';
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '23145424-17de0e2191faefedd106abc58';
-
+// const onLoader = false;
 const newPixabayFetchFunc = new PixabayFetchFunc(BASE_URL, API_KEY);
 console.log('SEARCH', newPixabayFetchFunc);
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
     searchValue: '',
     status: 'init',
     openModal: false,
+    onLoader: false,
   };
 
   fullImageURL = '';
@@ -27,24 +29,35 @@ class App extends Component {
       prevState.searchQuery !== this.state.searchQuery
       // ||      prevState.searchPage !== this.state.searchPage
     ) {
+      this.setState({ onLoader: true });
       newPixabayFetchFunc.resetPage();
+      newPixabayFetchFunc.onLoader = this.setState({ onLoader: true });
       newPixabayFetchFunc.searchQuery = this.state.searchQuery;
+      // this.setState({ onLoader: true });
 
+      console.log(newPixabayFetchFunc.onLoader);
       newPixabayFetchFunc
         .getImages()
         .then(response => {
           this.setState({ arreyImages: response });
           console.log(response);
         })
+        // .finally(() => {
+        //   this.setState({ onLoader: false });
+        // })
         .catch(error => {
           console.log(error);
         });
+      // this.setState({ onLoader: false });
+      newPixabayFetchFunc.onLoader = this.setState({ onLoader: false });
+      // this.resetLoader();
       this.scrollHandler();
     }
     if (
       prevState.arreyImages.length !== this.state.arreyImages.length &&
       prevState.arreyImages.length !== 0
     ) {
+      this.setState({ openModal: false });
       this.scrollHandler();
     }
   }
@@ -81,17 +94,24 @@ class App extends Component {
     newPixabayFetchFunc.searchPage = 1;
     console.log('searchPage', newPixabayFetchFunc.searchPage);
     newPixabayFetchFunc.searchQuery = this.state.searchQuery;
+    // this.setState({ onLoader: true });
+    // this.resetLoader();
     newPixabayFetchFunc
       .getImages()
       .then(arreyImages => {
         this.setState(prev => ({
           arreyImages: [...prev.arreyImages, ...arreyImages],
         }));
-        console.log(arreyImages);
+        // this.setState({ onLoader: false });
       })
       .catch(error => {
         console.log('НАХІБА ТАКЕ РОБИТИ', error);
       });
+    // this.resetLoader();
+  };
+
+  resetLoader = async () => {
+    this.setState({ onLoader: !this.state.onLoader });
   };
 
   render() {
@@ -105,6 +125,7 @@ class App extends Component {
             showImageHandler={this.showImageHandler}
           />
         )}
+        {this.state.onLoader && <Loader />}
         {this.state.arreyImages.length > 0 && (
           <Button
             loadMorer={this.loadMoreHandler}

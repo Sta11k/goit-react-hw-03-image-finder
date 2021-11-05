@@ -1,10 +1,12 @@
 import axios from 'axios';
+
 export class PixabayFetchFunc {
-  constructor(BASE_URL, API_KEY) {
+  constructor(BASE_URL, API_KEY, onLoader) {
     this.BASE_URL = BASE_URL;
     this.API_KEY = API_KEY;
     this._searchQuery = '';
     this._searchPage = 1;
+    this._onLoader = false;
   }
   get searchQuery() {
     return this._searchQuery;
@@ -24,6 +26,12 @@ export class PixabayFetchFunc {
   set searchPage(value) {
     return (this._searchPage += value);
   }
+  get onLoader() {
+    return this._onLoader;
+  }
+  set onLoader(value) {
+    return this._onLoader !== value;
+  }
 
   async getImages() {
     axios.defaults.baseURL = this.BASE_URL;
@@ -41,19 +49,5 @@ export class PixabayFetchFunc {
     } catch (error) {
       console.log('err', error.message);
     }
-
-    // return axios
-    //   .get(url)
-    //   .then(result => {
-    //     console.log(result);
-    //     return result.data;
-    //   })
-    //   .then(data => {
-    //     console.log(data.hits);
-    //     return data.hits;
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
   }
 }
