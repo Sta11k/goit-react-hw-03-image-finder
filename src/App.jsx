@@ -39,6 +39,13 @@ class App extends Component {
         .catch(error => {
           console.log(error);
         });
+      this.scrollHandler();
+    }
+    if (
+      prevState.arreyImages.length !== this.state.arreyImages.length &&
+      prevState.arreyImages.length !== 0
+    ) {
+      this.scrollHandler();
     }
   }
   closeModal = () => {
@@ -46,7 +53,7 @@ class App extends Component {
     this.setState({ openModal: false });
   };
 
-  showImageHandler = imageURL => {
+  showImageHandler = imageURL => () => {
     this.fullImageURL = imageURL;
     this.setState({ openModal: true });
   };
@@ -94,7 +101,7 @@ class App extends Component {
         {this.state.arreyImages.length > 0 && (
           <ImageGallery
             arreyImages={this.state.arreyImages}
-            scrollHandler={this.scrollHandler()}
+            scrollHandler={this.scrollHandler}
             showImageHandler={this.showImageHandler}
           />
         )}
@@ -109,7 +116,7 @@ class App extends Component {
           <Modal
             fullImageURL={this.fullImageURL}
             // fullScrinImages={this.fullScrinImages}
-            closeMOdal={this.closeMOdal}
+            exitModal={this.closeModal}
           ></Modal>
         )}
       </div>

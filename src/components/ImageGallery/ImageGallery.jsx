@@ -5,7 +5,7 @@ export default class ImageGallery extends Component {
     return (
       <ul className="ImageGallery">
         {this.props.arreyImages.map(el => {
-          console.log(el.largeImageURL);
+          console.log('FULLIMG', el.largeImageURL);
           return (
             <ImageGalleryItem
               key={el.id}
