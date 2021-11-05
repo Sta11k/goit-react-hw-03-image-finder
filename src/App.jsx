@@ -29,13 +29,13 @@ class App extends Component {
       prevState.searchQuery !== this.state.searchQuery
       // ||      prevState.searchPage !== this.state.searchPage
     ) {
-      this.setState({ onLoader: true });
+      // this.setState({ onLoader: true });
       newPixabayFetchFunc.resetPage();
-      newPixabayFetchFunc.onLoader = this.setState({ onLoader: true });
       newPixabayFetchFunc.searchQuery = this.state.searchQuery;
       // this.setState({ onLoader: true });
 
       console.log(newPixabayFetchFunc.onLoader);
+      this.setState({ onLoader: true });
       newPixabayFetchFunc
         .getImages()
         .then(response => {
@@ -48,9 +48,9 @@ class App extends Component {
         .catch(error => {
           console.log(error);
         });
-      // this.setState({ onLoader: false });
-      newPixabayFetchFunc.onLoader = this.setState({ onLoader: false });
-      // this.resetLoader();
+
+      //  .finally(this.setState({ onLoader: false }));
+
       this.scrollHandler();
     }
     if (
@@ -92,10 +92,12 @@ class App extends Component {
 
   loadMoreHandler = () => {
     newPixabayFetchFunc.searchPage = 1;
+
     console.log('searchPage', newPixabayFetchFunc.searchPage);
     newPixabayFetchFunc.searchQuery = this.state.searchQuery;
     // this.setState({ onLoader: true });
     // this.resetLoader();
+
     newPixabayFetchFunc
       .getImages()
       .then(arreyImages => {
@@ -108,9 +110,10 @@ class App extends Component {
         console.log('НАХІБА ТАКЕ РОБИТИ', error);
       });
     // this.resetLoader();
+    // newPixabayFetchFunc.onLoader = false;
   };
 
-  resetLoader = async () => {
+  resetLoader = () => {
     this.setState({ onLoader: !this.state.onLoader });
   };
 
@@ -125,6 +128,7 @@ class App extends Component {
             showImageHandler={this.showImageHandler}
           />
         )}
+        {/* {newPixabayFetchFunc.onLoader && <Loader />} */}
         {this.state.onLoader && <Loader />}
         {this.state.arreyImages.length > 0 && (
           <Button

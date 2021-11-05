@@ -41,6 +41,7 @@ export class PixabayFetchFunc {
       'searchPage',
       this.searchPage,
     );
+
     let url = `?q=${this.searchQuery}&page=${this.searchPage}&key=${this.API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
     try {
       const result = await axios.get(url);
