@@ -26,12 +26,12 @@ export class PixabayFetchFunc {
   set searchPage(value) {
     return (this._searchPage += value);
   }
-  get onLoader() {
-    return this._onLoader;
-  }
-  set onLoader(value) {
-    return this._onLoader !== value;
-  }
+  // get onLoader() {
+  //   return this._onLoader;
+  // }
+  // set onLoader(value) {
+  //   return this._onLoader !== value;
+  // }
 
   async getImages() {
     axios.defaults.baseURL = this.BASE_URL;
@@ -46,6 +46,7 @@ export class PixabayFetchFunc {
     try {
       const result = await axios.get(url);
       const data = await result.data.hits;
+
       return data;
     } catch (error) {
       console.log('err', error.message);
